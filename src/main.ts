@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SWAGGER_ENDPOINT } from './app.constant';
 import { INestApplication } from '@nestjs/common';
+import "reflect-metadata";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
