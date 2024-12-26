@@ -13,6 +13,7 @@ import {POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_U
 		password: POSTGRES_PASSWORD,
 		database: POSTGRES_DB,
 		entities: [__dirname + '/**/*.entity{.ts,.js}'],
+		migrations: [__dirname + '/migrations/*{.ts,.js}'],
 		synchronize: true,
 	}),],
 	controllers: [AppController],
