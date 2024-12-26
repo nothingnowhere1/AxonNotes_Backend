@@ -1,28 +1,32 @@
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { SWAGGER_ENDPOINT } from './app.constant'
-import { INestApplication } from '@nestjs/common'
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { SWAGGER_ENDPOINT } from "./app.constant";
+import { INestApplication } from "@nestjs/common";
+import { DataSource } from "typeorm";
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule);
+  const dataSource = app.get(DataSource);
 
-	SwaggerSetup(app)
-	await app.listen(process.env.PORT ?? 3000)
+  await dataSource.runMigrations();
+
+  SwaggerSetup(app);
+  await app.listen(process.env.PORT ?? 3000);
 }
 
 function SwaggerSetup(app: INestApplication) {
-	if ( !SWAGGER_ENDPOINT ) return false
+  if (!SWAGGER_ENDPOINT) return false;
 
-	const config = new DocumentBuilder()
-		.setTitle('AxonNotes')
-		.setDescription('AxonNotes API')
-		.setVersion('0.1')
-		.build()
+  const config = new DocumentBuilder()
+    .setTitle("AxonNotes")
+    .setDescription("AxonNotes API")
+    .setVersion("0.1")
+    .build();
 
-	const document = SwaggerModule.createDocument(app, config)
-	SwaggerModule.setup(SWAGGER_ENDPOINT, app, document)
-	return SWAGGER_ENDPOINT
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup(SWAGGER_ENDPOINT, app, document);
+  return SWAGGER_ENDPOINT;
 }
 
-bootstrap()
+bootstrap();
