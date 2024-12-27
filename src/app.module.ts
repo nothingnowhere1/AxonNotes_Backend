@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AxonNotesModule } from './axon_notes/axon_notes.module';
+import { AxonNotesModule } from "./database/axon_notes/axon_notes.module";
 import CON from "./database/db.connection";
 
 @Module({

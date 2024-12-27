@@ -4,8 +4,12 @@ import CON from "./database/db.connection";
 // @ts-ignore
 const AppDataSource = new DataSource({
   ...CON,
-  entities: [__dirname + "/**/*/entities/*{.ts,.js}"],
-  migrations: [__dirname + "/**/*/migrations/*{.ts,.js}"],
+  entities: [
+    __dirname + "/database/axon_notes/entities/*.entity{.ts,.js}",
+  ],
+  migrations: [
+    __dirname + "/database/axon_notes/migrations/*{.ts,.js}",
+  ],
 });
 
 AppDataSource.initialize()
