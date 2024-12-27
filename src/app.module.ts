@@ -1,23 +1,21 @@
-import {Module} from '@nestjs/common';
+import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
-import {AppService} from './app.service';
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER} from "./app.constant";
+import { AppService } from "./app.service";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { AxonNotesModule } from './axon_notes/axon_notes.module';
+import CON from "./database/db.connection";
 
 @Module({
-	imports: [TypeOrmModule.forRoot({
-		type: 'postgres',
-		host: POSTGRES_HOST,
-		port: POSTGRES_PORT,
-		username: POSTGRES_USER,
-		password: POSTGRES_PASSWORD,
-		database: POSTGRES_DB,
-		entities: [__dirname + '/**/*.entity{.ts,.js}'],
-		migrations: [__dirname + '/migrations/*{.ts,.js}'],
-		synchronize: true,
-	}),],
-	controllers: [AppController],
-	providers: [AppService],
+  imports: [
+    // @ts-ignore
+    TypeOrmModule.forRoot({
+      ...CON,
+      synchronize: true,
+      autoLoadEntities: true,
+    }),
+    AxonNotesModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {
-}
+export class AppModule {}
