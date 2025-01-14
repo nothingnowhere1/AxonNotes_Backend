@@ -9,7 +9,17 @@ import {
 
 config();
 
-const CON = {
+interface CONNECTION {
+  type: "postgres";
+  host: string;
+  port: number;
+  username: string;
+  password: string;
+  database: string;
+  synchronize: boolean;
+}
+
+export const CON: CONNECTION = {
   type: "postgres",
   host: POSTGRES_HOST,
   port: POSTGRES_PORT,
@@ -18,5 +28,3 @@ const CON = {
   database: POSTGRES_DB,
   synchronize: true,
 };
-
-export default CON;
